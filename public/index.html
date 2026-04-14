@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blinkit Product Crawler</title>
+  <meta name="description" content="Web crawler for Blinkit — Scrape any category with CSV export">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+
+  <main>
+    <!-- Header -->
+    <header id="header">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            <path d="M2 12h20"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Blinkit Crawler</h1>
+          <p class="subtitle">Product Data Extraction Tool</p>
+        </div>
+      </div>
+      <div class="pincode-input-group">
+        <span class="pincode-label">Select Pincode</span>
+        <div class="pincode-row">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <input type="text" id="pincodeInput" placeholder="Enter Pincode" value="110048" maxlength="6" pattern="[0-9]*" inputmode="numeric">
+        </div>
+        <div id="pincodeError" class="pincode-error hidden">⚠️ Invalid pincode</div>
+      </div>
+    </header>
+
+    <!-- Category Selection -->
+    <section id="categories">
+      <div class="section-header-row">
+        <h2 class="section-title">Select Categories</h2>
+        <div class="select-actions">
+          <button class="chip-btn" onclick="selectAll()">Select All</button>
+          <button class="chip-btn" onclick="deselectAll()">Clear All</button>
+        </div>
+      </div>
+      <div id="categorySelector" class="category-selector"></div>
+      <div class="selected-summary">
+        <span id="selectedCount">0</span> categories selected
+      </div>
+    </section>
+
+    <!-- Controls -->
+    <section id="controls">
+      <button id="crawlBtn" onclick="startCrawl()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span>Start Crawling</span>
+      </button>
+      <button id="downloadBtn" onclick="downloadCSV()" disabled>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Download CSV</span>
+      </button>
+    </section>
+
+    <!-- Progress -->
+    <section id="progress-section" class="hidden">
+      <div class="progress-card">
+        <div class="progress-header">
+          <h2>Crawl Progress</h2>
+          <span id="progressPercent" class="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar-container">
+          <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+        </div>
+        <div class="progress-stats">
+          <div class="stat">
+            <span class="stat-label">Current</span>
+            <span id="currentCategory" class="stat-value">—</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Products</span>
+            <span id="productCount" class="stat-value">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Categories</span>
+            <span id="catProgress" class="stat-value">0 / 0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Duration</span>
+            <span id="duration" class="stat-value">0s</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Table -->
+    <section id="data-section" class="hidden">
+      <div class="table-header">
+        <h2 class="section-title">Extracted Products</h2>
+        <span id="totalProducts" class="product-badge">0 products</span>
+      </div>
+      <div class="table-container">
+        <table id="dataTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Brand</th>
+              <th>Price (₹)</th>
+              <th>MRP (₹)</th>
+              <th>Discount</th>
+              <th>Weight</th>
+              <th>Category</th>
+              <th>Stock</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>Built by <a href="mailto:ku.shrey.singh@gmail.com" style="color:var(--accent-light);text-decoration:none;font-weight:700;">@Shreyansh Singh</a> • Blinkit Product Crawler v2.0</p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
