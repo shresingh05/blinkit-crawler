@@ -8,6 +8,7 @@ puppeteer.use(StealthPlugin());
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const HOST = '0.0.0.0';
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -439,6 +440,6 @@ app.get('/api/download', (req, res) => {
   res.send(csv);
 });
 
-app.listen(PORT, () => {
-  console.log(`\n🌐 Blinkit Crawler running at http://localhost:${PORT}\n`);
+app.listen(PORT, HOST, () => {
+  console.log(`\n🌐 Blinkit Crawler running at http://${HOST}:${PORT}\n`);
 });

@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["...", "google-chrome", "atk", "at-spi2-atk", "libdrm", "mesa", "gbm", "nspr", "nss", "pango"]
+
+[phases.install]
+cmds = ["npm install"]
+
+[phases.build]
+cmds = ["npx puppeteer browsers install chrome"]
+
+[start]
+cmd = "npm start"
