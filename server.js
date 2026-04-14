@@ -215,9 +215,15 @@ async function crawl(pincode, categories) {
     console.log(`🚀 Starting crawl for pincode: ${pincode}`);
     browser = await puppeteer.launch({
       headless: 'new',
-      executablePath: vanillaPuppeteer.executablePath(),
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage',
-             '--disable-gpu', '--single-process', '--no-zygote', '--window-size=1280,900']
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || vanillaPuppeteer.executablePath(),
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu',
+        '--no-zygote',
+        '--window-size=1280,900'
+      ]
     });
 
     const page = await browser.newPage();

@@ -4,7 +4,11 @@
   "description": "Blinkit Product Web Crawler - Scrapes Milk, Bread & Egg products",
   "main": "server.js",
   "scripts": {
+    "build": "npx puppeteer browsers install chrome",
     "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "express": "^4.22.1",
