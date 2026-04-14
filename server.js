@@ -1,6 +1,7 @@
 const express = require('express');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const vanillaPuppeteer = require('puppeteer');
 const path = require('path');
 
 puppeteer.use(StealthPlugin());
@@ -214,8 +215,9 @@ async function crawl(pincode, categories) {
     console.log(`🚀 Starting crawl for pincode: ${pincode}`);
     browser = await puppeteer.launch({
       headless: 'new',
+      executablePath: vanillaPuppeteer.executablePath(),
       args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage',
-             '--disable-gpu', '--window-size=1280,900']
+             '--disable-gpu', '--single-process', '--no-zygote', '--window-size=1280,900']
     });
 
     const page = await browser.newPage();
